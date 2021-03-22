@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useFormik } from 'formik';
+import environment from '../enviroments'
 
 
 import {
@@ -23,12 +24,11 @@ const MainPage = () => {
   const [requestedData, setRequestedData] = useState('')
   /* const [triggerState, setTriggerState] = useState(false) */
   const [warning, setWarning] = useState(false)
+  const [graphWarning, setGraphWarning] = useState(false)
+  const [graphContainer, setGraphContainer] = useState(false)
+  const [imgUrl, setImgUrl] = useState('')
 
 
-  const environment = {
-    development: 'http://127.0.0.1:5000',
-    production: 'https://optimize-polynomial.herokuapp.com'
-  }
 
   /* useEffect(() => {
 
@@ -46,6 +46,7 @@ const MainPage = () => {
     },
     onSubmit: values => {
       setWarning(true)
+      setGraphContainer(false)
 
       setTimeout(setResults, 500, true)
 
@@ -55,9 +56,7 @@ const MainPage = () => {
       setTimeout(setWarning, 1000, false)
 
     }
-
   });
-
 
 
   const sendZeroRequest = (data) => {
@@ -68,14 +67,30 @@ const MainPage = () => {
         console.log(res)
         setRequestedData(res.data.Eq_zero)
       })
-      .catch((res) => { })
+      .catch((res) => {
+        setRequestedData('Zero Not Found')
+      })
   }
 
   const handleGraphics = () => {
+
+    setGraphWarning(true)
     axios.post(`${environment.production}/graphic`)
-      .then((res) => { })
+      .then((res) => {
+        console.log(res.data.img)
+        setImgUrl(res.data.img)
+
+      })
       .catch((res) => { })
 
+  }
+
+  const showGraphics = () => {
+
+    setGraphWarning(false)
+    setGraphContainer(true)
+
+    setTimeout(handleGraphics, 4000)
   }
 
 
@@ -83,12 +98,12 @@ const MainPage = () => {
   return (
     <CenterContainer>
 
-      <RowContainer height={50} align_items={'center'}>
-        <StyledText font_size={25}>Polynomial Calculator</StyledText>
+      <RowContainer height={40} align_items={'center'}>
+        <StyledText font_size={25}>Polynomial Calculator(v1.0)</StyledText>
       </RowContainer>
 
 
-      <RowContainer width={350} height={50} align_items={'center'}>
+      <RowContainer width={350} height={30} align_items={'center'}>
         <StyledText text_align={'left'} width={75}>Function:</StyledText>
         <StyledText > f(x) = p(x) + k * cos(x) </StyledText>
       </RowContainer>
@@ -99,10 +114,10 @@ const MainPage = () => {
         this example will generate this polynomial:4x^3 + 3x^2 + 2x^1 + 1x^0 + 3*cos(x). </StyledText>
 
       <RowContainer >
-        <RowContainer width={300} height={220}>
+        <RowContainer width={300} height={210}>
           <FormsContainer height={200} onSubmit={getConstantsValues.handleSubmit}>
             <RowContainer>
-              <Label width={110} htmlFor="n_values">N values:</Label>
+              <Label width={100} htmlFor="n_values">N values:</Label>
               <Input
                 width={150}
                 id="n_values"
@@ -113,7 +128,7 @@ const MainPage = () => {
               />
             </RowContainer>
             <RowContainer>
-              <Label width={110} htmlFor="k_value">K value:</Label>
+              <Label width={100} htmlFor="k_value">K value:</Label>
               <Input
                 width={150}
                 id="k_value"
@@ -124,7 +139,7 @@ const MainPage = () => {
               />
             </RowContainer>
             <RowContainer>
-              <Label width={110} htmlFor="initial_value">Initial Value:</Label>
+              <Label width={100} htmlFor="initial_value">Initial Value:</Label>
               <Input
                 width={150}
                 id="initial_value"
@@ -135,7 +150,7 @@ const MainPage = () => {
               />
             </RowContainer>
             <RowContainer>
-              <Label width={110} htmlFor="max_iterations">Max Iterations:</Label>
+              <Label width={100} htmlFor="max_iterations">Max Iterations:</Label>
               <Input
                 width={150}
                 id="max_iterations"
@@ -146,7 +161,7 @@ const MainPage = () => {
               />
             </RowContainer>
             <RowContainer>
-              <Label width={110} htmlFor="tolerance">Tolerance:</Label>
+              <Label width={100} htmlFor="tolerance">Tolerance:</Label>
               <Input
                 width={150}
                 id="tolerance"
@@ -163,11 +178,16 @@ const MainPage = () => {
         </RowContainer>
       </RowContainer>
 
-      {results && <ColumnContainer width={300}>
+      {results && <ColumnContainer height={110} width={300}>
         <StyledText font_size={20} text_align={'left'}> Results:{warning && <StyledSpanText color={"#DD0000"} font_size={12}>...loading</StyledSpanText>}</StyledText>
         <StyledText font_size={14} text_align={'left'}> Zero of equation: {requestedData ? requestedData : <span>Zero not Found!</span>}</StyledText>
         <StyledText font_size={14} text_align={'left'}>Absolute Error: </StyledText>
-        <Button onClick={handleGraphics} >See Graphics</Button>
+        <Button onClick={showGraphics} >See Graphics</Button>
+      </ColumnContainer>}
+
+
+      {graphContainer && <ColumnContainer height={150} width={300}>
+        {graphWarning ? <img style={{ cursor: 'pointer', height: '150px' }} alt={''} src={`${environment.production}/${imgUrl}`} /> : <StyledText color={"#DD0000"} > ...Loading</StyledText>}
       </ColumnContainer>}
 
 

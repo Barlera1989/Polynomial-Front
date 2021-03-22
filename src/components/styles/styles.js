@@ -48,7 +48,7 @@ top: ${(props) => `${(props.top)}px`};
 
 
 export const Button = styled.button`
-margin: 20px 5px;
+margin: 10px 5px;
 width: 200px;
 height: 30px;
 border-radius: 2px;
@@ -60,14 +60,15 @@ background-color: #350060;
 export const Label = styled.label`
 width: ${(props) => `${props.width}px`};
 display:flex;
+font-size:14px;
 flex-direction: column;
-padding: 5px;
+padding: 3px;
 text-align: left;
 `
 
 export const Input = styled.input`
 width: ${(props) => `${props.width}px`};
-height: 20px;
+height: 15px;
 border-radius: 4px;
 `
 
@@ -76,5 +77,11 @@ position: relative;
 left: 30px;
 font-size: ${(props) => `${props.font_size}px`};
 color: ${(props) => `${props.color}`};
+`
+
+export const StyledImg = styled.img`
+height: '150px';
+alt: '';
+cursor: pointer;
 `
 
