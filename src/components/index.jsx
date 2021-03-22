@@ -27,7 +27,7 @@ const MainPage = () => {
 
   const environment = {
     development: 'http://127.0.0.1:5000',
-    production: ''
+    production: 'https://optimize-polynomial.herokuapp.com'
   }
 
   /* useEffect(() => {
@@ -62,7 +62,7 @@ const MainPage = () => {
 
   const sendZeroRequest = (data) => {
 
-    axios.post(`${environment.development}/request`,
+    axios.post(`${environment.production}/request`,
       { ...data })
       .then((res) => {
         console.log(res)
@@ -72,7 +72,7 @@ const MainPage = () => {
   }
 
   const handleGraphics = () => {
-    axios.post(`${environment.development}/graphic`)
+    axios.post(`${environment.production}/graphic`)
       .then((res) => { })
       .catch((res) => { })
 
