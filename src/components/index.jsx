@@ -95,6 +95,7 @@ const MainPage = () => {
 
 
 
+
   return (
     <CenterContainer>
 
@@ -187,7 +188,7 @@ const MainPage = () => {
 
 
       {graphContainer && <ColumnContainer height={150} width={300}>
-        {graphWarning ? <img style={{ cursor: 'pointer', height: '150px' }} alt={''} src={`${environment.aws_url}/${imgUrl}`} /> : <StyledText color={"#DD0000"} > ...Loading</StyledText>}
+        {graphWarning ? <img onClick={() => window.open(`${environment.aws_url}/${imgUrl}`)} style={{ cursor: 'pointer', height: '150px' }} alt={''} src={`${environment.aws_url}/${imgUrl}`} /> : <StyledText color={"#DD0000"} > ...Loading</StyledText>}
       </ColumnContainer>}
 
 
