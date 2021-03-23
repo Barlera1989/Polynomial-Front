@@ -126,6 +126,7 @@ const MainPage = () => {
                 type="n_values"
                 onChange={getConstantsValues.handleChange}
                 value={getConstantsValues.values.n_values}
+                placeholder={'ex: 2,3,5 => (2x²+3x+5)'}
               />
             </RowContainer>
             <RowContainer>
@@ -137,6 +138,7 @@ const MainPage = () => {
                 type="k_value"
                 onChange={getConstantsValues.handleChange}
                 value={getConstantsValues.values.k_value}
+                placeholder={'ex: 4 => (4*cos(x))'}
               />
             </RowContainer>
             <RowContainer>
