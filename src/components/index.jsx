@@ -61,7 +61,7 @@ const MainPage = () => {
 
   const sendZeroRequest = (data) => {
 
-    axios.post(`${environment.production}/request`,
+    axios.post(`${environment.aws_url}/request`,
       { ...data })
       .then((res) => {
         console.log(res)
@@ -75,7 +75,7 @@ const MainPage = () => {
   const handleGraphics = () => {
 
     setGraphWarning(true)
-    axios.post(`${environment.production}/graphic`)
+    axios.post(`${environment.aws_url}/graphic`)
       .then((res) => {
         console.log(res.data.img)
         setImgUrl(res.data.img)
@@ -187,7 +187,7 @@ const MainPage = () => {
 
 
       {graphContainer && <ColumnContainer height={150} width={300}>
-        {graphWarning ? <img style={{ cursor: 'pointer', height: '150px' }} alt={''} src={`${environment.production}/${imgUrl}`} /> : <StyledText color={"#DD0000"} > ...Loading</StyledText>}
+        {graphWarning ? <img style={{ cursor: 'pointer', height: '150px' }} alt={''} src={`${environment.aws_url}/${imgUrl}`} /> : <StyledText color={"#DD0000"} > ...Loading</StyledText>}
       </ColumnContainer>}
 
 
